@@ -762,13 +762,26 @@
         <b>מצב נוכחי:</b> שמירה מקומית בדפדפן (עדיין לא מחובר ל-Google Sheets). הדיווחים נשמרים במכשיר זה בלבד עד שנחבר סנכרון.
       </div>
 
-      <div class="bug-layout">
+      <!-- tester identity gate: pick your name (existing or new) + a simple password -->
+      <div class="admin-lock" id="testerLock">
+        <div class="lock-card">
+          <div class="lock-ic">👋</div>
+          <h3 style="font-family:var(--serif);font-weight:700;font-size:19px">מי אתה?</h3>
+          <p style="color:var(--muted);font-size:14px;margin-top:6px">בחר/י את השם שלך מהרשימה (אם כבר דיווחת בעבר) או הקלד/י שם חדש. קבע/י סיסמה פשוטה — בפעם הראשונה היא נשמרת אוטומטית, ובפעמים הבאות היא רק מוודאת שזה באמת אתה.</p>
+          <form id="testerLoginForm" autocomplete="off" style="margin-top:16px;display:grid;gap:10px">
+            <input list="testerNames" id="t_name" placeholder="השם שלך" class="lock-input" required>
+            <datalist id="testerNames"></datalist>
+            <input type="password" id="t_pass" placeholder="סיסמה" class="lock-input" required>
+            <button type="submit" class="bug-submit" style="width:100%">כניסה</button>
+          </form>
+          <div class="lock-err" id="testerErr">סיסמה שגויה</div>
+        </div>
+      </div>
+
+      <div class="bug-layout" id="bugLayoutWrap" style="display:none">
         <!-- form -->
         <form class="bug-form" id="bugForm" autocomplete="off">
           <h3 class="bug-form-title">תקלה חדשה</h3>
-          <label class="bl">מי מדווח? <span class="req">*</span>
-            <input type="text" id="f_reporter" placeholder="השם שלך" required>
-          </label>
           <label class="bl">נושא / סוכן
             <input type="text" id="f_agent" placeholder="למשל: מלאי / סטטוס הזמנה / תמיכה טכנית">
           </label>
@@ -814,9 +827,11 @@
         <div class="bug-list-wrap">
           <div class="bug-list-head">
             <div class="blh-title">התקלות שדיווחתי <span class="count" id="bugCount">0</span></div>
+            <span class="bc-reporter" id="testerWhoAmI" style="margin-inline-start:auto"></span>
+            <button id="testerLogout" class="bf" style="padding:6px 14px">יציאה</button>
           </div>
           <div id="bugList"></div>
-          <div class="bug-empty" id="bugEmpty">כדי לראות את התקלות שדיווחת, הזן/י את שמך בשדה "מי מדווח?" למעלה.</div>
+          <div class="bug-empty" id="bugEmpty">עדיין לא דיווחת תקלות. פתח/י את הראשונה מהטופס.</div>
         </div>
       </div>
     </div>
@@ -1160,7 +1175,7 @@ document.addEventListener('click',e=>{
 /* ================= BUG REPORTS + ADMIN — data layer ================= */
 /* Paste your Google Apps Script Web App URL here after finishing the setup guide.
    Leave it empty ('') to keep working in local-only mode (each browser stores its own data). */
-const API_URL = 'https://script.google.com/macros/s/AKfycbwjLs_o2cun-2rrtxHk_PQkWboP06Y7dO7U8-NusuN45gezXz5BdHFKC26xU3c0ldsA/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycby1-2NBX3JIok3NTt_oPbYcYlBd--BgZPkzVGqa-FdOhxxwCxzDI73cytrgX3gWBui_/exec';
 
 function apiConfigured(){ return !!API_URL && API_URL.indexOf('script.google.com') > -1; }
 
@@ -1198,7 +1213,12 @@ const bugCountEl=document.getElementById('bugCount');
 function escB(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function bugId(){ return 'B'+String(Date.now()).slice(-6); }
 function fmtDate(ts){ const d=new Date(Number(ts)); return d.toLocaleDateString('he-IL')+' '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); }
-function myName(){ return (document.getElementById('f_reporter').value||'').trim(); }
+const TESTER_KEY='gaia_tester_v1';
+function getTester(){ try{ const raw=sessionStorage.getItem(TESTER_KEY); return raw?JSON.parse(raw):null; }catch(e){ return null; } }
+function setTester(name,pass){ try{ sessionStorage.setItem(TESTER_KEY, JSON.stringify({name,pass})); }catch(e){} }
+function clearTester(){ try{ sessionStorage.removeItem(TESTER_KEY); }catch(e){} }
+function myName(){ const t=getTester(); return t ? t.name : ''; }
+function myPass(){ const t=getTester(); return t ? t.pass : ''; }
 
 function statusSelect(bug){
   return '<label>סטטוס</label><select data-act="status" data-id="'+bug.id+'">'+
@@ -1214,18 +1234,9 @@ function statusBadge(bug){ const s=STATUSES.find(x=>x.v===bug.status)||STATUSES[
 let MY_BUGS=[];
 
 function paintBugs(){
-  const my=myName();
   bugCountEl.textContent=MY_BUGS.length;
   bugListEl.innerHTML='';
-  if(!my){
-    bugEmpty.textContent='כדי לראות את התקלות שדיווחת, הזן/י את שמך בשדה "מי מדווח?" למעלה.';
-    bugEmpty.style.display='block';
-  }else if(!MY_BUGS.length){
-    bugEmpty.textContent='עדיין לא דיווחת תקלות. פתח/י את הראשונה מהטופס.';
-    bugEmpty.style.display='block';
-  }else{
-    bugEmpty.style.display='none';
-  }
+  bugEmpty.style.display=MY_BUGS.length?'none':'block';
   MY_BUGS.slice().sort((a,b)=>b.ts-a.ts).forEach(b=>{
     const el=document.createElement('article');
     el.className='bug-card '+b.sev;
@@ -1248,15 +1259,22 @@ function paintBugs(){
 }
 
 async function loadMine(){
-  const my=myName();
+  const my=myName(), pass=myPass();
   if(!my){ MY_BUGS=[]; paintBugs(); return; }
   if(apiConfigured()){
     bugListEl.innerHTML='';
     bugEmpty.textContent='טוען מ-Google Sheets…';
     bugEmpty.style.display='block';
     try{
-      const r=await apiCall({action:'mine', reporter:my});
-      MY_BUGS = (r && r.ok) ? r.bugs : [];
+      const r=await apiCall({action:'mine', reporter:my, pass:pass});
+      if(r && r.ok){
+        MY_BUGS=r.bugs;
+      }else{
+        /* stored session no longer valid on the server — send back to the gate */
+        clearTester(); showTesterGate();
+        showToast('הסשן פג, יש להתחבר מחדש');
+        return;
+      }
     }catch(err){
       MY_BUGS=[];
       bugEmpty.textContent='שגיאת רשת בטעינת הנתונים. בדוק חיבור לאינטרנט ונסה שוב.';
@@ -1267,14 +1285,92 @@ async function loadMine(){
     const myL=my.toLowerCase();
     MY_BUGS=localLoad().filter(b=>(b.reporter||'').trim().toLowerCase()===myL);
   }
+  bugEmpty.textContent='עדיין לא דיווחת תקלות. פתח/י את הראשונה מהטופס.';
   paintBugs();
 }
 
-let reporterDebounce;
-document.getElementById('f_reporter').addEventListener('input',()=>{
-  clearTimeout(reporterDebounce);
-  reporterDebounce=setTimeout(loadMine,300);
+/* ---------- tester identity gate ---------- */
+const testerLock=document.getElementById('testerLock');
+const bugLayoutWrap=document.getElementById('bugLayoutWrap');
+const testerWhoAmI=document.getElementById('testerWhoAmI');
+
+function showTesterGate(){
+  testerLock.style.display='grid';
+  bugLayoutWrap.style.display='none';
+}
+function showBugLayout(){
+  testerLock.style.display='none';
+  bugLayoutWrap.style.display='block';
+  testerWhoAmI.textContent='מחובר/ת בתור: '+myName();
+}
+
+async function populateTesterNames(){
+  const dl=document.getElementById('testerNames');
+  if(apiConfigured()){
+    try{
+      const r=await apiCall({action:'testers_list'});
+      if(r && r.ok) dl.innerHTML=r.names.map(n=>'<option value="'+escB(n)+'">').join('');
+    }catch(err){ /* non-critical — just no autocomplete suggestions */ }
+  }else{
+    const names=[...new Set(localLoad().map(b=>b.reporter).filter(Boolean))];
+    dl.innerHTML=names.map(n=>'<option value="'+escB(n)+'">').join('');
+  }
+}
+populateTesterNames();
+
+document.getElementById('testerLoginForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const name=document.getElementById('t_name').value.trim();
+  const pass=document.getElementById('t_pass').value;
+  const errEl=document.getElementById('testerErr');
+  errEl.classList.remove('show');
+  if(!name || !pass){ errEl.textContent='מלא/י שם וסיסמה'; errEl.classList.add('show'); return; }
+  const btn=e.target.querySelector('button[type="submit"]');
+  btn.disabled=true; btn.textContent='מאמת…';
+  try{
+    if(apiConfigured()){
+      const r=await apiCall({action:'tester_auth', name, pass});
+      btn.disabled=false; btn.textContent='כניסה';
+      if(r && r.ok){
+        setTester(name,pass);
+        showBugLayout();
+        await loadMine();
+      }else{
+        const msg = (r && r.error==='wrong_pass') ? 'סיסמה שגויה. אם השם הזה לא שלך, בחר/י שם אחר.'
+                  : (r && r.error==='pass_too_short') ? 'הסיסמה קצרה מדי (לפחות 4 תווים)'
+                  : 'שגיאה, נסה שוב';
+        errEl.textContent=msg; errEl.classList.add('show');
+      }
+    }else{
+      /* local-mode fallback: no shared registry — just remember the pair in THIS browser */
+      const LK='gaia_local_testers_v1';
+      let testers={}; try{ testers=JSON.parse(localStorage.getItem(LK))||{}; }catch(err){}
+      const key=name.toLowerCase();
+      if(testers[key] !== undefined && testers[key] !== pass){
+        errEl.textContent='סיסמה שגויה'; errEl.classList.add('show'); btn.disabled=false; btn.textContent='כניסה'; return;
+      }
+      testers[key]=pass; try{ localStorage.setItem(LK, JSON.stringify(testers)); }catch(err){}
+      btn.disabled=false; btn.textContent='כניסה';
+      setTester(name,pass);
+      showBugLayout();
+      await loadMine();
+    }
+  }catch(err){
+    btn.disabled=false; btn.textContent='כניסה';
+    errEl.textContent='שגיאת רשת, נסה שוב'; errEl.classList.add('show');
+  }
 });
+
+document.getElementById('testerLogout').addEventListener('click',()=>{
+  clearTester();
+  document.getElementById('t_name').value='';
+  document.getElementById('t_pass').value='';
+  MY_BUGS=[];
+  showTesterGate();
+});
+
+/* resume session if already logged in on this tab, otherwise show the gate */
+if(getTester()){ showBugLayout(); loadMine(); } else { showTesterGate(); }
 
 /* ---------- screenshot: resize client-side, then upload as base64 with the bug ---------- */
 const shotInput=document.getElementById('f_shot');
@@ -1323,10 +1419,11 @@ bugForm.addEventListener('submit', async e=>{
   e.preventDefault();
   const sev=(bugForm.querySelector('input[name="sev"]:checked')||{}).value;
   if(!sev){ showToast('בחר חומרה'); return; }
-  if(!myName()){ showToast('מלא/י את השם שלך'); return; }
+  const reporter=myName(), pass=myPass();
+  if(!reporter){ showTesterGate(); return; }
   const bug={
     id:bugId(), ts:Date.now(),
-    reporter:myName(),
+    reporter:reporter,
     agent:document.getElementById('f_agent').value.trim(),
     group:document.getElementById('f_group').value,
     input:document.getElementById('f_input').value.trim(),
@@ -1340,14 +1437,18 @@ bugForm.addEventListener('submit', async e=>{
   submitBtn.disabled=true; submitBtn.textContent = pendingShotDataUrl ? 'מעלה תמונה…' : 'שולח…';
   try{
     if(apiConfigured()){
-      const payload={action:'add', bug};
+      const payload={action:'add', bug, pass:pass};
       if(pendingShotDataUrl){
         payload.imageBase64=pendingShotDataUrl.split(',')[1];
         payload.imageMime='image/jpeg';
         payload.imageName='B'+bug.id+'.jpg';
       }
       const r=await apiCall(payload);
-      if(!r || !r.ok){ showToast('שגיאה בשליחה, נסה שוב'); submitBtn.disabled=false; submitBtn.textContent='פתח תקלה'; return; }
+      if(!r || !r.ok){
+        if(r && r.error==='unauthorized'){ clearTester(); showTesterGate(); showToast('הסשן פג, יש להתחבר מחדש'); }
+        else showToast('שגיאה בשליחה, נסה שוב');
+        submitBtn.disabled=false; submitBtn.textContent='פתח תקלה'; return;
+      }
     }else{
       /* local mode has no Drive — keep the resized image inline as a data URL */
       if(pendingShotDataUrl) bug.shot=pendingShotDataUrl;
@@ -1361,15 +1462,12 @@ bugForm.addEventListener('submit', async e=>{
   submitBtn.disabled=false; submitBtn.textContent='פתח תקלה';
   await loadMine();
   if(window.refreshAdminIfOpen) window.refreshAdminIfOpen();
-  /* keep reporter name, clear the rest */
   ['f_agent','f_input','f_botreply','f_desc'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('f_group').value='';
   shotInput.value=''; pendingShotDataUrl=null; shotPreviewWrap.style.display='none';
   bugForm.querySelectorAll('input[name="sev"]').forEach(r=>r.checked=false);
   showToast('התקלה נפתחה ✔');
 });
-
-paintBugs();
 
 /* ================= ADMIN ================= */
 const adminLock=document.getElementById('adminLock');
