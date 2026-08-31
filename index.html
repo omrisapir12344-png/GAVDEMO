@@ -384,6 +384,95 @@
     .sev-grid{grid-template-columns:1fr}
     body{font-size:16px}
   }
+  /* ---------- bug reports ---------- */
+  .bug-layout{display:grid; grid-template-columns:minmax(320px,420px) 1fr; gap:20px; align-items:start; margin-top:4px}
+  .bug-form{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow); position:sticky; top:70px}
+  .bug-form-title{font-family:var(--serif,var(--sans)); font-weight:800; font-size:18px; margin-bottom:14px}
+  .bl{display:block; font-weight:700; font-size:14px; color:var(--ink); margin-bottom:14px}
+  .bl .req{color:var(--crit)}
+  .bl input, .bl textarea, .bl select{width:100%; margin-top:6px; font-family:var(--sans); font-size:14.5px; font-weight:400;
+    padding:10px 12px; border:1px solid var(--line-2); border-radius:10px; background:var(--surface-2); color:var(--ink); resize:vertical}
+  .bl select{font-weight:600; cursor:pointer}
+  .bl input:focus, .bl textarea:focus, .bl select:focus{outline:2px solid var(--accent); outline-offset:1px; border-color:transparent; background:var(--surface)}
+  .hint-sm{display:block; font-weight:500; font-size:12px; color:var(--muted); margin-top:5px}
+  .sev-picker{display:grid; gap:7px; margin-top:7px}
+  .sev-opt{display:flex; align-items:flex-start; gap:9px; padding:9px 12px; border:1px solid var(--line); border-radius:10px;
+    cursor:pointer; font-weight:600; font-size:13.5px; transition:.14s; background:var(--surface); position:relative}
+  .sev-opt input{position:absolute; opacity:0; pointer-events:none}
+  .sev-opt .dot{flex:0 0 auto; width:12px; height:12px; border-radius:50%; background:var(--c); margin-top:3px}
+  .sev-opt b{flex:0 0 auto; color:var(--c); font-family:var(--mono); font-size:12.5px; direction:ltr; min-width:62px}
+  .sev-opt em{font-style:normal; font-weight:500; color:var(--ink-2); font-size:12.5px}
+  .sev-opt.crit{--c:var(--crit)} .sev-opt.high{--c:var(--high)} .sev-opt.med{--c:var(--med)} .sev-opt.low{--c:var(--low)}
+  .sev-opt:has(input:checked){border-color:var(--c); background:color-mix(in srgb, var(--c) 8%, white); box-shadow:0 0 0 1px var(--c)}
+  .bug-submit{width:100%; margin-top:4px; border:0; cursor:pointer; font-family:var(--sans); font-weight:800; font-size:15.5px;
+    color:#fff; background:var(--ink); border-radius:12px; padding:13px; transition:.15s}
+  .bug-submit:hover{background:var(--accent)}
+
+  .bug-list-wrap{min-width:0}
+  .bug-list-head{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px}
+  .blh-title{font-weight:800; font-size:17px}
+  .blh-title .count{font-family:var(--mono); font-size:12px; color:#fff; background:var(--accent); border-radius:999px; padding:2px 9px; margin-inline-start:5px}
+  .bug-filters{display:flex; gap:6px; flex-wrap:wrap}
+  .bf{border:1px solid var(--line-2); background:var(--surface); color:var(--muted); cursor:pointer; font-family:var(--sans);
+    font-weight:700; font-size:13px; padding:6px 12px; border-radius:999px; transition:.14s}
+  .bf:hover{color:var(--ink)} .bf.active{background:var(--ink); color:#fff; border-color:var(--ink)}
+  .bug-empty{display:none; text-align:center; padding:36px; color:var(--muted); font-weight:600;
+    border:1px dashed var(--line-2); border-radius:var(--radius)}
+
+  .bug-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px;
+    box-shadow:var(--shadow); margin-bottom:11px; border-inline-start:4px solid var(--c,var(--muted))}
+  .bug-card.Critical{--c:var(--crit)} .bug-card.High{--c:var(--high)} .bug-card.Medium{--c:var(--med)} .bug-card.Low{--c:var(--low)}
+  .bug-card .bc-top{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:9px}
+  .bug-card .sev-tag{font-family:var(--mono); font-size:11.5px; font-weight:600; color:#fff; background:var(--c); padding:2px 9px; border-radius:6px; direction:ltr}
+  .bug-card .bc-agent{font-weight:800; font-size:15.5px}
+  .bug-card .bc-id{font-family:var(--mono); font-size:11px; color:var(--muted); margin-inline-start:auto}
+  .bug-card .bc-body{display:grid; gap:5px; font-size:14px; color:var(--ink-2)}
+  .bug-card .bc-body .r{display:flex; gap:7px} .bug-card .bc-body .r b{color:var(--ink); flex:0 0 auto}
+  .bug-card .bc-shot a{color:var(--accent); font-weight:700; text-decoration:none; font-size:13.5px}
+  .bug-card .bc-shot-img{max-width:220px; max-height:160px; border-radius:8px; margin-top:6px; display:block; border:1px solid var(--line)}
+  .bug-card .bc-meta{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:11px; padding-top:11px; border-top:1px solid var(--line)}
+  .bug-card .bc-meta label{font-size:11.5px; font-weight:700; color:var(--muted)}
+  .bug-card select{font-family:var(--sans); font-weight:700; font-size:12.5px; padding:5px 8px; border:1px solid var(--line-2); border-radius:8px; background:var(--surface-2); color:var(--ink); cursor:pointer}
+  .bug-card .st-badge{font-family:var(--sans); font-size:11.5px; font-weight:700; padding:2px 9px; border-radius:6px}
+  .st-new{background:#EEF1FE; color:var(--accent)} .st-progress{background:var(--med-bg); color:var(--med)}
+  .st-review{background:#EAF0FF; color:#2f6fd6} .st-dev{background:#F3ECFE; color:var(--accent-2)} .st-done{background:var(--low-bg); color:var(--low)}
+  .bug-card .bc-del{margin-inline-start:auto; border:0; background:transparent; color:var(--muted); cursor:pointer; font-size:12px; font-weight:700}
+  .bug-card .bc-del:hover{color:var(--crit)}
+  .bug-card .bc-reporter{font-size:12px; color:var(--muted); font-weight:600}
+
+  /* ---------- admin ---------- */
+  .admin-lock{display:grid; place-items:center; min-height:340px}
+  .lock-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:32px; box-shadow:var(--shadow); text-align:center; max-width:400px; width:100%}
+  .lock-ic{font-size:34px; margin-bottom:8px}
+  .lock-input{width:100%; font-family:var(--sans); font-size:15px; padding:11px 14px; border:1px solid var(--line-2); border-radius:10px; background:var(--surface-2); text-align:center}
+  .lock-input:focus{outline:2px solid var(--accent); outline-offset:1px; border-color:transparent}
+  .lock-err{display:none; color:var(--crit); font-weight:700; font-size:13.5px; margin-top:10px}
+  .lock-err.show{display:block}
+
+  .stat-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-top:20px}
+  .stat-c{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm); padding:16px 18px; box-shadow:var(--shadow); border-top:3px solid var(--c,var(--accent))}
+  .stat-c .num{font-family:var(--serif,var(--sans)); font-weight:800; font-size:30px; line-height:1; color:var(--c,var(--ink))}
+  .stat-c .lbl{font-size:13px; color:var(--muted); font-weight:700; margin-top:5px}
+
+  .brk-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; margin-top:22px}
+  .brk-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)}
+  .brk-title{font-weight:800; font-size:15px; margin-bottom:12px}
+  .brk-row{display:flex; align-items:center; gap:10px; margin-bottom:9px; font-size:13.5px}
+  .brk-row .rl{flex:0 0 auto; font-weight:700; min-width:60px; color:var(--ink-2)}
+  .brk-row .bar{flex:1; height:9px; background:var(--surface-2); border:1px solid var(--line); border-radius:99px; overflow:hidden}
+  .brk-row .bar > i{display:block; height:100%; background:var(--c,var(--accent)); border-radius:99px}
+  .brk-row .rn{flex:0 0 auto; font-family:var(--mono); font-weight:600; color:var(--muted); min-width:24px; text-align:end}
+
+  .admin-tools{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:24px 0 14px}
+  .admin-filters{display:flex; gap:8px; flex-wrap:wrap; flex:1}
+  .af-sel, .af-search{font-family:var(--sans); font-weight:600; font-size:13px; padding:8px 11px; border:1px solid var(--line-2); border-radius:9px; background:var(--surface); color:var(--ink); cursor:pointer}
+  .af-search{flex:1; min-width:150px; cursor:text}
+  .af-sel:focus, .af-search:focus{outline:2px solid var(--accent); outline-offset:1px}
+
+  @media (max-width:820px){
+    .bug-layout{grid-template-columns:1fr}
+    .bug-form{position:static}
+  }
   @media (prefers-reduced-motion:reduce){
     *{animation:none !important; transition:none !important; scroll-behavior:auto}
   }
@@ -422,13 +511,15 @@
 <div class="tabsbar">
   <div class="wrap">
     <nav class="tabs" role="tablist" aria-label="ניווט בדיקות">
-      <button class="tab active" data-tab="mission" role="tab">המשימה <span class="en">MISSION</span></button>
+      <button class="tab active" data-tab="bugs" role="tab">דיווח תקלות <span class="en">BUGS</span></button>
+      <button class="tab" data-tab="mission" role="tab">המשימה <span class="en">MISSION</span></button>
       <button class="tab" data-tab="break" role="tab">איך לשבור <span class="en">BREAK IT</span></button>
       <button class="tab" data-tab="report" role="tab">תקלות ודיווח <span class="en">REPORT</span></button>
       <button class="tab" data-tab="checklist" role="tab">צ'קליסט יומי <span class="en">DAILY</span></button>
       <button class="tab" data-tab="groups" role="tab">חלוקת קבוצות <span class="en">TEAMS</span></button>
       <button class="tab" data-tab="bank" role="tab">בנק שאלות <span class="en">QUESTIONS</span></button>
       <button class="tab" data-tab="redteam" role="tab">שבירת בוט <span class="en">RED TEAM</span></button>
+      <button class="tab" data-tab="admin" role="tab">לוח ניהול <span class="en">ADMIN</span></button>
     </nav>
   </div>
 </div>
@@ -436,7 +527,7 @@
 <main class="wrap">
 
   <!-- ============ MISSION ============ -->
-  <section class="panel show" id="mission" role="tabpanel">
+  <section class="panel" id="mission" role="tabpanel">
     <div class="block">
       <div class="sec-eyebrow">Your Mission</div>
       <h2 class="sec">מה מצופה מכל בודק?</h2>
@@ -450,7 +541,7 @@
         <div class="mcard"><div class="n">3</div><p>לבדוק שאלות עם מידע חסר, טעויות כתיב, ניסוח עממי ושינויי נושא.</p></div>
         <div class="mcard"><div class="n">4</div><p>לא לוותר אחרי תשובה ראשונה — להמשיך את השיחה ולבדוק אם גאיה שומרת הקשר.</p></div>
         <div class="mcard"><div class="n">5</div><p>לבדוק לא רק אם התשובה נכונה, אלא גם אם ניתנה על ידי הסוכן הנכון ובצורה נכונה.</p></div>
-        <div class="mcard"><div class="n">6</div><p>כשמוצאים בעיה — לדווח מיד בקבוצת ה־WhatsApp הייעודית לפי הפורמט.</p></div>
+        <div class="mcard"><div class="n">6</div><p>כשמוצאים בעיה — לפתוח דיווח מיד בטאב <b>"דיווח תקלות"</b>. תקלת Critical? אפשר גם להקפיץ הודעה בוואטסאפ.</p></div>
       </div>
     </div>
 
@@ -503,15 +594,17 @@
 
     <div class="block">
       <div class="sec-eyebrow">Reporting</div>
-      <h2 class="sec">איך מדווחים בקבוצת ה־WhatsApp</h2>
-      <p class="sec-desc">כל בעיה נשלחת בקבוצת ה־WhatsApp הייעודית של הצוות שלכם מיד לאחר שמצאתם אותה. כך נוכל לתקן עוד באותו יום ולהחזיר לכם לבדיקה חוזרת.</p>
+      <h2 class="sec">איך מדווחים על תקלה</h2>
+      <p class="sec-desc">כל בעיה נפתחת כדיווח בטאב <b>"דיווח תקלות"</b> מיד לאחר שמצאתם אותה. כך נוכל לתקן עוד באותו יום ולהחזיר לכם לבדיקה חוזרת. <b>לתקלת Critical דחופה</b> אפשר בנוסף להקפיץ הודעה קצרה בקבוצת הוואטסאפ כדי שנשים לב מיד.</p>
+      <p style="font-weight:600;color:var(--ink-2);margin-bottom:12px">אלה בדיוק השדות שממלאים בטופס:</p>
       <div class="fields">
+        <div class="field"><div class="k">מי מדווח</div><div class="v">השם שלכם — כדי שנדע למי לחזור</div></div>
         <div class="field"><div class="k">נושא / סוכן</div><div class="v">לדוגמה: מלאי / סטטוס הזמנה / תמיכה טכנית</div></div>
         <div class="field"><div class="k">מה כתבתי</div><div class="v">העתקה מדויקת של הודעת הלקוח</div></div>
-        <div class="field"><div class="k">מה הבוט ענה</div><div class="v">העתקה או צילום מסך</div></div>
+        <div class="field"><div class="k">מה הבוט ענה</div><div class="v">העתקה של תשובת הבוט</div></div>
         <div class="field"><div class="k">מה לא תקין</div><div class="v">במשפט אחד: מה ציפיתי שיקרה</div></div>
         <div class="field"><div class="k">חומרה <span class="mono">SEV</span></div><div class="v"><span class="mono">Critical / High / Medium / Low</span></div></div>
-        <div class="field"><div class="k">צילום מסך</div><div class="v">חובה כשיש בעיית רצף, ניתוב או הקשר</div></div>
+        <div class="field"><div class="k">צילום מסך</div><div class="v">קישור לצילום — חובה בבעיית רצף, ניתוב או הקשר</div></div>
       </div>
 
       <div class="wa-card">
@@ -520,14 +613,18 @@
           דוגמה לדיווח טוב
         </div>
         <div class="wa-msg">
+          <div class="line"><b>מדווח:</b> עומרי</div>
           <div class="line"><b>סוכן:</b> מלאי</div>
           <div class="line"><b>מה כתבתי:</b> "אני צריך <span class="ltr">iPhone</span> שחור היום, איפה בטוח יש?"</div>
           <div class="line"><b>מה הבוט ענה:</b> "יש במלאי בדיזנגוף והוא יחכה לך."</div>
           <div class="line"><b>בעיה:</b> הבוט התחייב על זמינות/שמירה בלי לבצע שריון.</div>
           <div class="line"><b>חומרה:</b> <span class="sev-tag">High</span></div>
-          <div class="line"><b>מצורף:</b> צילום מסך ✔</div>
-          <div class="time">✔✔ נשלח לקבוצת הצוות</div>
+          <div class="line"><b>מצורף:</b> קישור לצילום מסך ✔</div>
+          <div class="time">✔ נפתח בטאב "דיווח תקלות"</div>
         </div>
+      </div>
+      <div class="note-inline" style="margin-top:16px">
+        <strong>Critical דחוף?</strong> פתחו דיווח בטופס <b>וגם</b> הקפיצו הודעה קצרה בקבוצת הוואטסאפ, כדי שנשים לב ונתקן מיד — בלי לחכות.
       </div>
     </div>
 
@@ -538,7 +635,7 @@
         <div class="step"><p>מריצים שוב את השאלה המקורית <b>בדיוק כפי שנכתבה.</b></p></div>
         <div class="step"><p>מריצים עוד <b>2 ניסוחים שונים</b> לאותה כוונה.</p></div>
         <div class="step"><p>בודקים שהפתרון <b>לא שבר</b> נושא סמוך או מעבר בין סוכנים.</p></div>
-        <div class="step"><p>מחזירים בקבוצת ה־WhatsApp: <b>"עבר Regression"</b> או <b>"עדיין נכשל"</b> + צילום מסך.</p></div>
+        <div class="step"><p>מעדכנים את התקלה בטופס: משנים סטטוס ל־<b>"טופל"</b> (עבר) או מוסיפים דיווח <b>"עדיין נכשל"</b> + צילום מסך.</p></div>
       </div>
     </div>
   </section>
@@ -573,7 +670,7 @@
     <div class="block">
       <div class="sec-eyebrow">Teams</div>
       <h2 class="sec">חלוקת קבוצות הבדיקה</h2>
-      <p class="sec-desc">לכל קבוצת בדיקה יש קבוצת WhatsApp נפרדת, שבה ידווחו רק הממצאים, התיקונים וה־Regression של התחום שלה. כך נשמור על דיווח ממוקד ולא נערבב בין עולמות תוכן.</p>
+      <p class="sec-desc">כל קבוצת בדיקה מדווחת דרך טאב <b>"דיווח תקלות"</b>, ומסמנת את הנושא/הסוכן הרלוונטי כדי שהממצאים יישארו ממוקדים ומסודרים לפי תחום. קבוצת הוואטסאפ נשמרת לתקלות Critical דחופות בלבד.</p>
       <div class="groups">
         <div class="group">
           <div class="gh"><div class="gn">1</div><div class="gt">מכירה לפני רכישה</div></div>
@@ -650,6 +747,141 @@
       <div class="rt-intro" id="rtList"></div>
       <div class="warn-box" style="margin-top:18px">
         <b>תזכורת:</b> בבדיקות אלה לעולם אין להזין מספרי אשראי אמיתיים, <span class="ltr">OTP</span>, סיסמאות או מידע אישי אמיתי. משתמשים במספרים מומצאים בלבד.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BUG REPORTS ============ -->
+  <section class="panel show" id="bugs" role="tabpanel">
+    <div class="block">
+      <div class="sec-eyebrow">Bug Reports</div>
+      <h2 class="sec">דיווח תקלות</h2>
+      <p class="sec-desc">מצאת תקלה? פתח דיווח כאן. מלא את הפרטים, סמן חומרה לפי הקריטריונים, וצרף קישור לצילום מסך. הדיווחים מסתנכרנים לכל הצוות.</p>
+
+      <div id="bugSyncNote" class="warn-box" style="margin-top:0;margin-bottom:18px">
+        <b>מצב נוכחי:</b> שמירה מקומית בדפדפן (עדיין לא מחובר ל-Google Sheets). הדיווחים נשמרים במכשיר זה בלבד עד שנחבר סנכרון.
+      </div>
+
+      <div class="bug-layout">
+        <!-- form -->
+        <form class="bug-form" id="bugForm" autocomplete="off">
+          <h3 class="bug-form-title">תקלה חדשה</h3>
+          <label class="bl">מי מדווח? <span class="req">*</span>
+            <input type="text" id="f_reporter" placeholder="השם שלך" required>
+          </label>
+          <label class="bl">נושא / סוכן
+            <input type="text" id="f_agent" placeholder="למשל: מלאי / סטטוס הזמנה / תמיכה טכנית">
+          </label>
+          <label class="bl">קבוצת בדיקה <span class="req">*</span>
+            <select id="f_group" required>
+              <option value="">בחר קבוצה…</option>
+              <option>קבוצה 1 — מכירה לפני רכישה</option>
+              <option>קבוצה 2 — הזמנה ורכישה קיימת</option>
+              <option>קבוצה 3 — שירות ותיקונים</option>
+              <option>קבוצה 4 — מידע כללי</option>
+              <option>Red Team — רוחבי</option>
+            </select>
+          </label>
+          <label class="bl">מה כתבתי (הודעת הלקוח)
+            <textarea id="f_input" rows="2" placeholder="ההודעה המדויקת ששלחתי לבוט"></textarea>
+          </label>
+          <label class="bl">מה הבוט ענה
+            <textarea id="f_botreply" rows="2" placeholder="התשובה של הבוט"></textarea>
+          </label>
+          <label class="bl">מה לא תקין / מה ציפיתי <span class="req">*</span>
+            <textarea id="f_desc" rows="2" placeholder="במשפט: מה הבעיה ומה ציפיתי שיקרה" required></textarea>
+          </label>
+
+          <div class="bl">חומרה <span class="req">*</span>
+            <div class="sev-picker" id="sevPicker">
+              <label class="sev-opt crit"><input type="radio" name="sev" value="Critical"><span class="dot"></span><b>Critical</b><em>מידע מהותי שגוי, הבטחה לא מאושרת, פעולה עסקית שגויה, חשיפת מידע</em></label>
+              <label class="sev-opt high"><input type="radio" name="sev" value="High"><span class="dot"></span><b>High</b><em>תשובה מטעה/חלקית משמעותית, כשל חוזר, תהליך תקוע</em></label>
+              <label class="sev-opt med"><input type="radio" name="sev" value="Medium"><span class="dot"></span><b>Medium</b><em>שאלה מיותרת, ניסוח לא ברור, מעבר לא חלק, חוסר רציפות</em></label>
+              <label class="sev-opt low"><input type="radio" name="sev" value="Low"><span class="dot"></span><b>Low</b><em>שיפור ניסוח / UX / קוסמטיקה שלא פוגע בשירות</em></label>
+            </div>
+          </div>
+
+          <label class="bl">צילום מסך
+            <input type="file" id="f_shot" accept="image/*">
+            <span class="hint-sm">בחר/י תמונה (או צלם/י) — היא תעלה אוטומטית ל-Drive בשליחת הטופס.</span>
+          </label>
+          <div id="shotPreviewWrap" style="display:none;margin-top:-8px"><img id="shotPreview" style="max-width:160px;max-height:120px;border-radius:8px;border:1px solid var(--line-2);display:block"/></div>
+
+          <button type="submit" class="bug-submit">פתח תקלה</button>
+        </form>
+
+        <!-- list -->
+        <div class="bug-list-wrap">
+          <div class="bug-list-head">
+            <div class="blh-title">התקלות שדיווחתי <span class="count" id="bugCount">0</span></div>
+          </div>
+          <div id="bugList"></div>
+          <div class="bug-empty" id="bugEmpty">כדי לראות את התקלות שדיווחת, הזן/י את שמך בשדה "מי מדווח?" למעלה.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ADMIN ============ -->
+  <section class="panel" id="admin" role="tabpanel">
+    <!-- lock screen -->
+    <div class="admin-lock" id="adminLock">
+      <div class="lock-card">
+        <div class="lock-ic">🔒</div>
+        <h2 class="sec" style="font-size:24px">לוח ניהול</h2>
+        <p class="sec-desc" style="margin-bottom:16px">אזור מוגן. הזן סיסמה כדי לצפות בכל הדיווחים ולנהל אותם.</p>
+        <form id="adminLoginForm" autocomplete="off">
+          <input type="password" id="adminPass" placeholder="סיסמה" class="lock-input">
+          <button type="submit" class="bug-submit" style="margin-top:10px">כניסה</button>
+        </form>
+        <div class="lock-err" id="adminErr">סיסמה שגויה</div>
+      </div>
+    </div>
+
+    <!-- dashboard -->
+    <div class="admin-dash" id="adminDash" style="display:none">
+      <div class="block">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+          <div>
+            <div class="sec-eyebrow">Admin Dashboard</div>
+            <h2 class="sec">לוח ניהול תקלות</h2>
+          </div>
+          <button id="adminLogout" class="bf" style="padding:8px 16px">יציאה</button>
+        </div>
+
+        <!-- stat cards -->
+        <div class="stat-grid" id="statGrid"></div>
+
+        <!-- breakdowns -->
+        <div class="brk-grid">
+          <div class="brk-card">
+            <h3 class="brk-title">לפי חומרה</h3>
+            <div id="brkSev"></div>
+          </div>
+          <div class="brk-card">
+            <h3 class="brk-title">לפי קבוצת בדיקה</h3>
+            <div id="brkGroup"></div>
+          </div>
+          <div class="brk-card">
+            <h3 class="brk-title">לפי מטפל</h3>
+            <div id="brkAssignee"></div>
+          </div>
+        </div>
+
+        <!-- filters + table -->
+        <div class="admin-tools">
+          <div class="admin-filters">
+            <select id="af_status" class="af-sel"><option value="">כל הסטטוסים</option></select>
+            <select id="af_sev" class="af-sel"><option value="">כל החומרות</option><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select>
+            <select id="af_group" class="af-sel"><option value="">כל הקבוצות</option><option>קבוצה 1 — מכירה לפני רכישה</option><option>קבוצה 2 — הזמנה ורכישה קיימת</option><option>קבוצה 3 — שירות ותיקונים</option><option>קבוצה 4 — מידע כללי</option><option>Red Team — רוחבי</option></select>
+            <select id="af_assignee" class="af-sel"><option value="">כל המטפלים</option><option>—</option><option>עומרי</option><option>זיו</option><option>בל</option></select>
+            <input type="search" id="af_search" class="af-search" placeholder="חיפוש בטקסט…">
+          </div>
+          <button id="adminExport" class="bf" style="padding:8px 14px">ייצוא CSV</button>
+        </div>
+
+        <div id="adminList"></div>
+        <div class="bug-empty" id="adminEmpty">אין תקלות שתואמות את הסינון.</div>
       </div>
     </div>
   </section>
@@ -924,6 +1156,394 @@ document.addEventListener('click',e=>{
   const btn=e.target.closest('[data-copy]');
   if(btn){ e.preventDefault(); e.stopPropagation(); copyText(btn.getAttribute('data-copy'),btn); }
 });
+
+/* ================= BUG REPORTS + ADMIN — data layer ================= */
+/* Paste your Google Apps Script Web App URL here after finishing the setup guide.
+   Leave it empty ('') to keep working in local-only mode (each browser stores its own data). */
+const API_URL = 'https://script.google.com/macros/s/AKfycbwjLs_o2cun-2rrtxHk_PQkWboP06Y7dO7U8-NusuN45gezXz5BdHFKC26xU3c0ldsA/exec';
+
+function apiConfigured(){ return !!API_URL && API_URL.indexOf('script.google.com') > -1; }
+
+async function apiCall(payload){
+  const res = await fetch(API_URL, {
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=utf-8'}, /* avoids a CORS preflight against Apps Script */
+    body: JSON.stringify(payload)
+  });
+  return res.json();
+}
+
+const BUG_KEY='gaia_bug_reports_v1';           /* local-mode fallback cache only */
+const LOCAL_ADMIN_PASS='gaia2026';             /* only used in local mode — NOT real security, see notes below */
+const ADMIN_KEY='gaia_admin_ok_v1';
+const STATUSES=[
+  {v:'new',    t:'חדש',    cls:'st-new'},
+  {v:'progress',t:'בטיפול', cls:'st-progress'},
+  {v:'review', t:'בבדיקה',  cls:'st-review'},
+  {v:'dev',    t:'פיתוח',   cls:'st-dev'},
+  {v:'done',   t:'טופל',    cls:'st-done'}
+];
+const ASSIGNEES=['—','עומרי','זיו','בל'];
+const GROUPS_LIST=['קבוצה 1 — מכירה לפני רכישה','קבוצה 2 — הזמנה ורכישה קיימת','קבוצה 3 — שירות ותיקונים','קבוצה 4 — מידע כללי','Red Team — רוחבי'];
+const SEV_COLORS={Critical:'var(--crit)',High:'var(--high)',Medium:'var(--med)',Low:'var(--low)'};
+
+function localLoad(){ try{return JSON.parse(localStorage.getItem(BUG_KEY))||[];}catch(e){return [];} }
+function localSave(arr){ try{localStorage.setItem(BUG_KEY,JSON.stringify(arr));}catch(e){} }
+
+const bugForm=document.getElementById('bugForm');
+const bugListEl=document.getElementById('bugList');
+const bugEmpty=document.getElementById('bugEmpty');
+const bugCountEl=document.getElementById('bugCount');
+
+function escB(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function bugId(){ return 'B'+String(Date.now()).slice(-6); }
+function fmtDate(ts){ const d=new Date(Number(ts)); return d.toLocaleDateString('he-IL')+' '+d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); }
+function myName(){ return (document.getElementById('f_reporter').value||'').trim(); }
+
+function statusSelect(bug){
+  return '<label>סטטוס</label><select data-act="status" data-id="'+bug.id+'">'+
+    STATUSES.map(s=>'<option value="'+s.v+'"'+(bug.status===s.v?' selected':'')+'>'+s.t+'</option>').join('')+'</select>';
+}
+function assigneeSelect(bug){
+  return '<label>משויך ל-</label><select data-act="assignee" data-id="'+bug.id+'">'+
+    ASSIGNEES.map(a=>'<option'+(bug.assignee===a?' selected':'')+'>'+a+'</option>').join('')+'</select>';
+}
+function statusBadge(bug){ const s=STATUSES.find(x=>x.v===bug.status)||STATUSES[0]; return '<span class="st-badge '+s.cls+'">'+s.t+'</span>'; }
+
+/* ---------- tester side: fetch (or read locally) only MY bugs, read-only ---------- */
+let MY_BUGS=[];
+
+function paintBugs(){
+  const my=myName();
+  bugCountEl.textContent=MY_BUGS.length;
+  bugListEl.innerHTML='';
+  if(!my){
+    bugEmpty.textContent='כדי לראות את התקלות שדיווחת, הזן/י את שמך בשדה "מי מדווח?" למעלה.';
+    bugEmpty.style.display='block';
+  }else if(!MY_BUGS.length){
+    bugEmpty.textContent='עדיין לא דיווחת תקלות. פתח/י את הראשונה מהטופס.';
+    bugEmpty.style.display='block';
+  }else{
+    bugEmpty.style.display='none';
+  }
+  MY_BUGS.slice().sort((a,b)=>b.ts-a.ts).forEach(b=>{
+    const el=document.createElement('article');
+    el.className='bug-card '+b.sev;
+    let h='<div class="bc-top"><span class="sev-tag">'+escB(b.sev)+'</span>';
+    if(b.agent) h+='<span class="bc-agent">'+escB(b.agent)+'</span>';
+    h+=statusBadge(b);
+    h+='<span class="bc-id">#'+b.id+'</span></div>';
+    h+='<div class="bc-body">';
+    if(b.group)    h+='<div class="r"><b>קבוצה:</b><span>'+escB(b.group)+'</span></div>';
+    if(b.input)    h+='<div class="r"><b>נכתב:</b><span>'+escB(b.input)+'</span></div>';
+    if(b.botreply) h+='<div class="r"><b>הבוט ענה:</b><span>'+escB(b.botreply)+'</span></div>';
+    h+='<div class="r"><b>הבעיה:</b><span>'+escB(b.desc)+'</span></div>';
+    if(b.shot) h+='<div class="r bc-shot"><b>צילום:</b><a href="'+escB(b.shot)+'" target="_blank" rel="noopener"><img src="'+escB(b.shot)+'" alt="צילום מסך" loading="lazy" class="bc-shot-img"/></a></div>';
+    h+='</div>';
+    /* read-only for the tester: status badge already shown above, no status/assignee editing, no delete */
+    h+='<div class="bc-meta"><span class="bc-reporter">'+fmtDate(b.ts)+'</span></div>';
+    el.innerHTML=h;
+    bugListEl.appendChild(el);
+  });
+}
+
+async function loadMine(){
+  const my=myName();
+  if(!my){ MY_BUGS=[]; paintBugs(); return; }
+  if(apiConfigured()){
+    bugListEl.innerHTML='';
+    bugEmpty.textContent='טוען מ-Google Sheets…';
+    bugEmpty.style.display='block';
+    try{
+      const r=await apiCall({action:'mine', reporter:my});
+      MY_BUGS = (r && r.ok) ? r.bugs : [];
+    }catch(err){
+      MY_BUGS=[];
+      bugEmpty.textContent='שגיאת רשת בטעינת הנתונים. בדוק חיבור לאינטרנט ונסה שוב.';
+      bugEmpty.style.display='block';
+      return;
+    }
+  }else{
+    const myL=my.toLowerCase();
+    MY_BUGS=localLoad().filter(b=>(b.reporter||'').trim().toLowerCase()===myL);
+  }
+  paintBugs();
+}
+
+let reporterDebounce;
+document.getElementById('f_reporter').addEventListener('input',()=>{
+  clearTimeout(reporterDebounce);
+  reporterDebounce=setTimeout(loadMine,300);
+});
+
+/* ---------- screenshot: resize client-side, then upload as base64 with the bug ---------- */
+const shotInput=document.getElementById('f_shot');
+const shotPreviewWrap=document.getElementById('shotPreviewWrap');
+const shotPreview=document.getElementById('shotPreview');
+
+function resizeImageFile(file, maxDim, quality){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onerror=()=>reject(new Error('read_failed'));
+    reader.onload=()=>{
+      const img=new Image();
+      img.onerror=()=>reject(new Error('decode_failed'));
+      img.onload=()=>{
+        let w=img.width, h=img.height;
+        if(w>h){ if(w>maxDim){ h=Math.round(h*maxDim/w); w=maxDim; } }
+        else{ if(h>maxDim){ w=Math.round(w*maxDim/h); h=maxDim; } }
+        const canvas=document.createElement('canvas');
+        canvas.width=w; canvas.height=h;
+        canvas.getContext('2d').drawImage(img,0,0,w,h);
+        resolve(canvas.toDataURL('image/jpeg',quality));
+      };
+      img.src=reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+let pendingShotDataUrl=null; /* resized data URL, ready to send on submit */
+shotInput.addEventListener('change', async ()=>{
+  pendingShotDataUrl=null;
+  shotPreviewWrap.style.display='none';
+  const file=shotInput.files && shotInput.files[0];
+  if(!file) return;
+  try{
+    pendingShotDataUrl=await resizeImageFile(file,1280,0.8);
+    shotPreview.src=pendingShotDataUrl;
+    shotPreviewWrap.style.display='block';
+  }catch(err){
+    showToast('לא ניתן היה לקרוא את התמונה, נסה תמונה אחרת');
+    shotInput.value='';
+  }
+});
+
+bugForm.addEventListener('submit', async e=>{
+  e.preventDefault();
+  const sev=(bugForm.querySelector('input[name="sev"]:checked')||{}).value;
+  if(!sev){ showToast('בחר חומרה'); return; }
+  if(!myName()){ showToast('מלא/י את השם שלך'); return; }
+  const bug={
+    id:bugId(), ts:Date.now(),
+    reporter:myName(),
+    agent:document.getElementById('f_agent').value.trim(),
+    group:document.getElementById('f_group').value,
+    input:document.getElementById('f_input').value.trim(),
+    botreply:document.getElementById('f_botreply').value.trim(),
+    desc:document.getElementById('f_desc').value.trim(),
+    sev:sev,
+    shot:'',
+    status:'new', assignee:'—'
+  };
+  const submitBtn=bugForm.querySelector('.bug-submit');
+  submitBtn.disabled=true; submitBtn.textContent = pendingShotDataUrl ? 'מעלה תמונה…' : 'שולח…';
+  try{
+    if(apiConfigured()){
+      const payload={action:'add', bug};
+      if(pendingShotDataUrl){
+        payload.imageBase64=pendingShotDataUrl.split(',')[1];
+        payload.imageMime='image/jpeg';
+        payload.imageName='B'+bug.id+'.jpg';
+      }
+      const r=await apiCall(payload);
+      if(!r || !r.ok){ showToast('שגיאה בשליחה, נסה שוב'); submitBtn.disabled=false; submitBtn.textContent='פתח תקלה'; return; }
+    }else{
+      /* local mode has no Drive — keep the resized image inline as a data URL */
+      if(pendingShotDataUrl) bug.shot=pendingShotDataUrl;
+      const all=localLoad(); all.push(bug); localSave(all);
+    }
+  }catch(err){
+    showToast('שגיאת רשת, נסה שוב');
+    submitBtn.disabled=false; submitBtn.textContent='פתח תקלה';
+    return;
+  }
+  submitBtn.disabled=false; submitBtn.textContent='פתח תקלה';
+  await loadMine();
+  if(window.refreshAdminIfOpen) window.refreshAdminIfOpen();
+  /* keep reporter name, clear the rest */
+  ['f_agent','f_input','f_botreply','f_desc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f_group').value='';
+  shotInput.value=''; pendingShotDataUrl=null; shotPreviewWrap.style.display='none';
+  bugForm.querySelectorAll('input[name="sev"]').forEach(r=>r.checked=false);
+  showToast('התקלה נפתחה ✔');
+});
+
+paintBugs();
+
+/* ================= ADMIN ================= */
+const adminLock=document.getElementById('adminLock');
+const adminDash=document.getElementById('adminDash');
+const adminList=document.getElementById('adminList');
+const adminEmpty=document.getElementById('adminEmpty');
+let ADMIN_BUGS=[];
+
+/* In server mode the password the admin types is checked on the server (Apps Script) and is
+   never stored in this file's source code. It's kept in sessionStorage only so this tab stays
+   logged in on refresh — it's cleared by "יציאה" or when the browser tab/session ends. */
+function adminUnlocked(){ try{return !!sessionStorage.getItem(ADMIN_KEY);}catch(e){return false;} }
+function getStoredPass(){ try{return sessionStorage.getItem(ADMIN_KEY)||'';}catch(e){return '';} }
+function setStoredPass(v){ try{sessionStorage.setItem(ADMIN_KEY,v);}catch(e){} }
+function clearStoredPass(){ try{sessionStorage.removeItem(ADMIN_KEY);}catch(e){} }
+
+function showAdmin(ok){
+  adminLock.style.display=ok?'none':'grid';
+  adminDash.style.display=ok?'block':'none';
+  if(ok) renderAdmin();
+}
+
+document.getElementById('adminLoginForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const v=document.getElementById('adminPass').value;
+  const errEl=document.getElementById('adminErr');
+  if(apiConfigured()){
+    errEl.textContent='סיסמה שגויה'; errEl.classList.remove('show');
+    try{
+      const r=await apiCall({action:'admin_check_pass', pass:v});
+      if(r && r.ok){ setStoredPass(v); showAdmin(true); }
+      else{ errEl.classList.add('show'); }
+    }catch(err){
+      errEl.textContent='שגיאת רשת — לא ניתן היה לאמת מול Google Sheets';
+      errEl.classList.add('show');
+    }
+  }else{
+    if(v===LOCAL_ADMIN_PASS){ setStoredPass(v); errEl.classList.remove('show'); showAdmin(true); }
+    else{ errEl.textContent='סיסמה שגויה'; errEl.classList.add('show'); }
+  }
+});
+document.getElementById('adminLogout').addEventListener('click',()=>{ clearStoredPass(); document.getElementById('adminPass').value=''; showAdmin(false); });
+
+/* populate status filter */
+(function(){ const sel=document.getElementById('af_status'); STATUSES.forEach(s=>{const o=document.createElement('option');o.value=s.v;o.textContent=s.t;sel.appendChild(o);}); })();
+
+function statMini(label,count,color){ return '<div class="stat-c" style="--c:'+color+'"><div class="num">'+count+'</div><div class="lbl">'+label+'</div></div>'; }
+function brkBars(counts,order,colorFn){
+  const max=Math.max(1,...Object.values(counts));
+  return order.filter(k=>counts[k]).map(k=>{
+    const c=colorFn?colorFn(k):'var(--accent)';
+    return '<div class="brk-row"><span class="rl">'+escB(k)+'</span><span class="bar"><i style="width:'+(counts[k]/max*100)+'%;background:'+c+'"></i></span><span class="rn">'+counts[k]+'</span></div>';
+  }).join('')||'<div style="color:var(--muted);font-size:13px">אין נתונים</div>';
+}
+
+function paintAdmin(){
+  const all=ADMIN_BUGS.slice();
+  /* stat cards */
+  const open=all.filter(b=>b.status!=='done').length;
+  const done=all.filter(b=>b.status==='done').length;
+  const crit=all.filter(b=>b.sev==='Critical'&&b.status!=='done').length;
+  document.getElementById('statGrid').innerHTML=
+    statMini('סה״כ תקלות',all.length,'var(--accent)')+
+    statMini('פתוחות',open,'var(--high)')+
+    statMini('Critical פתוחות',crit,'var(--crit)')+
+    statMini('טופלו',done,'var(--low)');
+
+  /* breakdowns */
+  const bySev={},byGroup={},byAss={};
+  all.forEach(b=>{ bySev[b.sev]=(bySev[b.sev]||0)+1; const g=b.group||'ללא'; byGroup[g]=(byGroup[g]||0)+1; const a=b.assignee||'—'; byAss[a]=(byAss[a]||0)+1; });
+  document.getElementById('brkSev').innerHTML=brkBars(bySev,['Critical','High','Medium','Low'],k=>SEV_COLORS[k]||'var(--accent)');
+  document.getElementById('brkGroup').innerHTML=brkBars(byGroup,GROUPS_LIST.concat(['ללא']),null);
+  document.getElementById('brkAssignee').innerHTML=brkBars(byAss,['עומרי','זיו','בל','—'],null);
+
+  /* filtered table */
+  const fS=document.getElementById('af_status').value, fSev=document.getElementById('af_sev').value,
+        fG=document.getElementById('af_group').value, fA=document.getElementById('af_assignee').value,
+        q=(document.getElementById('af_search').value||'').toLowerCase();
+  let list=all.sort((a,b)=>b.ts-a.ts).filter(b=>{
+    if(fS && b.status!==fS) return false;
+    if(fSev && b.sev!==fSev) return false;
+    if(fG && b.group!==fG) return false;
+    if(fA && (b.assignee||'—')!==fA) return false;
+    if(q){ const hay=((b.desc||'')+' '+(b.agent||'')+' '+(b.reporter||'')+' '+(b.input||'')+' '+(b.botreply||'')).toLowerCase(); if(!hay.includes(q)) return false; }
+    return true;
+  });
+  adminList.innerHTML='';
+  adminEmpty.style.display=list.length?'none':'block';
+  list.forEach(b=>{
+    const el=document.createElement('article');
+    el.className='bug-card '+b.sev;
+    let h='<div class="bc-top"><span class="sev-tag">'+escB(b.sev)+'</span>';
+    if(b.agent) h+='<span class="bc-agent">'+escB(b.agent)+'</span>';
+    h+=statusBadge(b)+'<span class="bc-id">#'+b.id+'</span></div>';
+    h+='<div class="bc-body">';
+    if(b.group)    h+='<div class="r"><b>קבוצה:</b><span>'+escB(b.group)+'</span></div>';
+    if(b.input)    h+='<div class="r"><b>נכתב:</b><span>'+escB(b.input)+'</span></div>';
+    if(b.botreply) h+='<div class="r"><b>הבוט ענה:</b><span>'+escB(b.botreply)+'</span></div>';
+    h+='<div class="r"><b>הבעיה:</b><span>'+escB(b.desc)+'</span></div>';
+    if(b.shot) h+='<div class="r bc-shot"><b>צילום:</b><a href="'+escB(b.shot)+'" target="_blank" rel="noopener"><img src="'+escB(b.shot)+'" alt="צילום מסך" loading="lazy" class="bc-shot-img"/></a></div>';
+    h+='</div>';
+    h+='<div class="bc-meta">'+statusSelect(b)+assigneeSelect(b)+
+       '<span class="bc-reporter">· '+escB(b.reporter)+' · '+fmtDate(b.ts)+'</span>'+
+       '<button class="bc-del" data-act="del" data-id="'+b.id+'">מחק</button></div>';
+    el.innerHTML=h;
+    adminList.appendChild(el);
+  });
+}
+
+window.renderAdmin=async function(){
+  if(!adminUnlocked()) return;
+  if(apiConfigured()){
+    try{
+      const r=await apiCall({action:'admin_list', pass:getStoredPass()});
+      if(!r || !r.ok){ clearStoredPass(); showAdmin(false); showToast('הסשן פג, התחבר שוב'); return; }
+      ADMIN_BUGS=r.bugs;
+    }catch(err){ showToast('שגיאת רשת בטעינת לוח הניהול'); return; }
+  }else{
+    ADMIN_BUGS=localLoad();
+  }
+  paintAdmin();
+};
+window.refreshAdminIfOpen=function(){ if(adminUnlocked()) renderAdmin(); };
+
+adminList.addEventListener('change', async e=>{
+  const s=e.target.closest('select[data-act]'); if(!s) return;
+  const bug=ADMIN_BUGS.find(x=>x.id===s.dataset.id); if(!bug) return;
+  const patch={};
+  if(s.dataset.act==='status') patch.status=s.value;
+  if(s.dataset.act==='assignee') patch.assignee=s.value;
+  Object.assign(bug,patch);
+  if(apiConfigured()){
+    try{ await apiCall({action:'admin_update', id:bug.id, pass:getStoredPass(), ...patch}); }
+    catch(err){ showToast('שגיאת רשת בשמירה'); }
+  }else{
+    const all=localLoad(); const i=all.findIndex(x=>x.id===bug.id); if(i>-1){ Object.assign(all[i],patch); localSave(all); }
+  }
+  paintAdmin();
+  await loadMine();
+});
+adminList.addEventListener('click', async e=>{
+  const d=e.target.closest('[data-act="del"]'); if(!d) return;
+  if(!confirm('למחוק את התקלה #'+d.dataset.id+'?')) return;
+  ADMIN_BUGS=ADMIN_BUGS.filter(x=>x.id!==d.dataset.id);
+  if(apiConfigured()){
+    try{ await apiCall({action:'admin_delete', id:d.dataset.id, pass:getStoredPass()}); }
+    catch(err){ showToast('שגיאת רשת במחיקה'); }
+  }else{
+    localSave(localLoad().filter(x=>x.id!==d.dataset.id));
+  }
+  paintAdmin();
+  await loadMine();
+});
+['af_status','af_sev','af_group','af_assignee'].forEach(id=>document.getElementById(id).addEventListener('change',paintAdmin));
+document.getElementById('af_search').addEventListener('input',paintAdmin);
+
+/* CSV export */
+document.getElementById('adminExport').addEventListener('click',()=>{
+  const cols=['id','ts','reporter','group','agent','sev','status','assignee','input','botreply','desc','shot'];
+  const head=['מזהה','תאריך','מדווח','קבוצה','סוכן','חומרה','סטטוס','מטפל','נכתב','הבוט ענה','הבעיה','צילום'];
+  const esc=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+  const rows=ADMIN_BUGS.slice().sort((a,b)=>b.ts-a.ts).map(b=>cols.map(c=>{
+    if(c==='ts') return esc(fmtDate(b.ts));
+    if(c==='status'){const s=STATUSES.find(x=>x.v===b.status);return esc(s?s.t:b.status);}
+    return esc(b[c]);
+  }).join(','));
+  const csv='\uFEFF'+head.map(esc).join(',')+'\n'+rows.join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='gaia-bugs.csv'; a.click();
+});
+
+/* init admin state on load */
+showAdmin(adminUnlocked());
+
 </script>
 
 <!-- Freshchat widget -->
