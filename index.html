@@ -1666,19 +1666,14 @@ showAdmin(adminUnlocked());
       "textBanner": "נשמח לעזור! רק תשאירו שם וטלפון ונמשיך משם."
     };
     window.fcSettings = {
-      onInit: function() {
-        window.fcPreChatform.fcWidgetInit(window.prechatTemplate);
-    }
-    };
-    window.fcWidgetMessengerConfig = {
       config: {
-          headers: {
-              chat: "iDigital"
-          },
           cssNames: {
               widget: "custom_fc_frame",
               expanded: "custom_fc_expanded"
           }
+      },
+      onInit: function() {
+        window.fcPreChatform.fcWidgetInit(window.prechatTemplate);
       }
     };
 </script>
