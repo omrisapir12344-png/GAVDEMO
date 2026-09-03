@@ -1640,7 +1640,38 @@ showAdmin(adminUnlocked());
 
 </script>
 
-<!-- Freshchat widget -->
+<!-- Freshchat widget with pre-chat form -->
+<script>
+  window.prechatTemplate = {
+      "SubmitLabel": "התחל שיחה",
+      "fields": {
+          "0": {
+            "error": "אנא הזן שם תקין",
+            "fieldId": "name",
+            "label": "שם",
+            "required": "yes",
+            "type": "text"
+          },
+          "1": {
+            "error": "אנא הזן מספר טלפון תקין",
+            "fieldId": "phone",
+            "label": "טלפון",
+            "required": "yes",
+            "type": "phone"
+          }
+      },
+      "heading": "לפני שנתחיל",
+      "mainbgColor": "#000000",
+      "maintxColor": "#fff",
+      "textBanner": "נשמח לעזור! רק תשאירו שם וטלפון ונמשיך משם."
+    };
+    window.fcSettings = {
+      onInit: function() {
+        window.fcPreChatform.fcWidgetInit(window.prechatTemplate);
+    }
+    };
+</script>
+<script src="https://snippets.freshchat.com/js/fc-pre-chat-form-v2.js"></script>
 <script src='https://fw-cdn.com/17200003/7509210.js' chat='true'></script>
 </body>
 </html>
