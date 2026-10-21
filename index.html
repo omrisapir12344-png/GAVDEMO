@@ -297,7 +297,7 @@
     .ben-ico svg { width: 36px; height: 36px; }
     .cards { grid-template-columns: minmax(0,1fr); }
     .float-cta {
-      display: flex; position: fixed; bottom: 14px; left: 16px; right: 16px; z-index: 40;
+      display: flex; position: fixed; bottom: 31px; left: 16px; right: 100px; z-index: 40; /* leaves room for the chat bubble */
       transition: transform .25s ease, opacity .25s ease;
     }
     .float-cta.hide { transform: translateY(120%); opacity: 0; pointer-events: none; }
@@ -647,5 +647,8 @@
     }).observe(canvas);
   })();
 </script>
+<!-- Botpress chat bot -->
+<script src="https://cdn.botpress.cloud/webchat/v5.0/inject.js"></script>
+<script src="https://files.bpcontent.cloud/2026/10/21/17/20261021170148-AB2YBY26.js" defer></script>
 </body>
 </html>
