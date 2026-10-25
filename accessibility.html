@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>הצהרת נגישות | GAV Intelligence</title>
+<meta name="description" content="הצהרת הנגישות של דף הנחיתה של GAV Intelligence.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14111F;
+    --muted: #5D5872;
+    --line: #E9E6F2;
+    --soft: #F4F2FA;
+    --violet: #8E5CF0;
+    --pink: #D855A8;
+    --grad-warm: linear-gradient(90deg, var(--violet), var(--pink));
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #fff; color: var(--ink);
+    font-family: "Rubik", system-ui, sans-serif; font-size: 17px; line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .grad-line { height: 6px; background: var(--grad-warm); }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+  .skip-link {
+    position: absolute; top: 8px; right: 8px; padding: 10px 16px; border-radius: 8px;
+    background: #fff; color: var(--ink); font-weight: 800; transform: translateY(-200%);
+  }
+  .skip-link:focus { transform: none; }
+  a { color: #5B2FC9; }
+  a:focus-visible { outline: 3px solid var(--violet); outline-offset: 2px; }
+  header { padding: 28px 0 8px; }
+  .back { font-weight: 700; }
+  main { padding: 8px 0 56px; }
+  main:focus { outline: none; }
+  h1 { font-size: clamp(34px, 5vw, 48px); font-weight: 900; line-height: 1.15; margin: 18px 0 8px; }
+  .lead { color: var(--muted); font-size: 18px; margin: 0 0 28px; }
+  section {
+    background: var(--soft); border-radius: 14px; padding: 20px 22px; margin-bottom: 14px;
+    border-right: 6px solid var(--violet);
+  }
+  section:nth-of-type(2) { border-right-color: var(--pink); }
+  section:nth-of-type(3) { border-right-color: #2E96EB; }
+  section:nth-of-type(4) { border-right-color: #5A7AE7; }
+  h2 { font-size: 22px; font-weight: 800; margin: 0 0 8px; }
+  p { margin: 0 0 10px; }
+  p:last-child { margin-bottom: 0; }
+  ul { margin: 0 0 10px; padding-right: 22px; }
+  li { margin-bottom: 4px; }
+  footer { border-top: 1px solid var(--line); padding: 18px 0 28px; color: var(--muted); font-size: 15px; }
+  @media (max-width: 560px) {
+    .wrap { padding: 0 16px; }
+    section { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">דלגו לתוכן הראשי</a>
+<div class="grad-line"></div>
+
+<header>
+  <div class="wrap">
+    <a class="back" href="index.html">חזרה לדף הבית של <span lang="en">GAV Intelligence</span></a>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <div class="wrap">
+    <h1>הצהרת נגישות</h1>
+    <p class="lead">אנחנו ב־GAV Systems רוצים שכל אחד ואחת יוכלו להשתמש בדף של <span lang="en">GAV Intelligence</span> בקלות ובנוחות.</p>
+
+    <section aria-labelledby="done-title">
+      <h2 id="done-title">מה הונגש</h2>
+      <p>הדף נבנה לפי הנחיות <span lang="en">WCAG</span> ברמה <span lang="en">AA</span>, ונבדק בדפדפן ובניווט מקלדת.</p>
+      <p>הונגשו:</p>
+      <ul>
+        <li>ניגודיות הטקסט מול הרקע, כולל טקסט משני.</li>
+        <li>תיאורי התמונות: ללוגואים יש טקסט חלופי, וסמלים לקישוט מוסתרים מקוראי מסך.</li>
+        <li>תוויות קבועות לכל שדות הטופס, סימון שדות חובה והודעות שגיאה שמחוברות לשדה.</li>
+        <li>ניווט במקלדת: סדר מעבר הגיוני, סימון ברור של המיקוד וקישור לדילוג לתוכן הראשי.</li>
+        <li>מבנה הכותרות: כותרת ראשית אחת וכותרות משנה לפי הסדר.</li>
+        <li>שפה וכיוון כתיבה מוגדרים בראש המסמך, וטקסט באנגלית מסומן כאנגלית.</li>
+        <li>אנימציות: הנקודות הנעות בראש הדף נעצרות מעצמן אצל מי שהגדיר במכשיר הפחתת תנועה, ואפשר לעצור אותן גם מתפריט הנגישות.</li>
+      </ul>
+      <p>בדף יש תפריט נגישות (הכפתור העגול בפינה השמאלית התחתונה), שמאפשר: הגדלה והקטנה של הטקסט, ניגודיות גבוהה, גווני אפור, הדגשת קישורים וכפתורים, גופן קריא ועצירת אנימציות.</p>
+    </section>
+
+    <section aria-labelledby="todo-title">
+      <h2 id="todo-title">ומה עדיין לא</h2>
+      <p>חלון הצ'אט בדף מבוסס על שירות חיצוני. לתמונה שבכפתור הפתיחה שלו חסר טקסט חלופי, וייתכן שחלקים נוספים בו אינם נגישים במלואם. אפשר לפנות אלינו גם דרך הטופס בראש הדף או במייל שמופיע כאן למטה.</p>
+    </section>
+
+    <section aria-labelledby="contact-title">
+      <h2 id="contact-title">פנייה בנושא נגישות</h2>
+      <p>נתקלתם בבעיה או שיש לכם הצעה לשיפור? נשמח לשמוע.</p>
+      <p>אחראי נגישות: עמרי ספיר · <a href="mailto:omri.sa@gav.co.il" lang="en">omri.sa@gav.co.il</a></p>
+    </section>
+
+    <section aria-labelledby="date-title">
+      <h2 id="date-title">תאריך עדכון</h2>
+      <p>ההצהרה עודכנה בתאריך: 25.10.2026</p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 <span lang="en">GAV Systems</span></div>
+</footer>
+</body>
+</html>
