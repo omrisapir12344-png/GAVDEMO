@@ -171,6 +171,9 @@
   .consent input { margin-top: 2px; accent-color: var(--violet); }
   .form-note { font-size: 13px; text-align: center; color: var(--muted); min-height: 1em; margin: 0; }
   .form-note.ok { color: #0F7F57; font-weight: 700; }
+  .form-note.error { color: #B42318; font-weight: 700; }
+  .lead-form .btn:disabled { opacity: .65; cursor: wait; transform: none; }
+  .form-trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 
   /* chevron divider */
   .chev { position: relative; height: 0; }
@@ -416,22 +419,22 @@
       <p class="sub">השאירו פרטים לתיאום הדגמה</p>
       <div class="field">
         <label for="f-name">שם מלא <span class="req" aria-hidden="true">*</span></label>
-        <input id="f-name" name="name" type="text" autocomplete="name" aria-required="true" aria-describedby="e-name">
+        <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120" aria-required="true" aria-describedby="e-name">
         <div class="err" id="e-name">צריך למלא שם</div>
       </div>
       <div class="field">
         <label for="f-company">חברה / מוקד</label>
-        <input id="f-company" name="company" type="text" autocomplete="organization">
+        <input id="f-company" name="company" type="text" autocomplete="organization" maxlength="160">
       </div>
       <div class="field">
         <label for="f-phone">טלפון <span class="req" aria-hidden="true">*</span></label>
-        <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" aria-required="true" aria-describedby="e-phone">
+        <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required maxlength="25" aria-required="true" aria-describedby="e-phone">
         <div class="err" id="e-phone">צריך מספר טלפון תקין</div>
       </div>
       <div class="field">
-        <label for="f-email">מייל</label>
-        <input id="f-email" name="email" type="email" autocomplete="email" aria-describedby="e-email">
-        <div class="err" id="e-email">כתובת המייל לא תקינה</div>
+        <label for="f-email">מייל <span class="req" aria-hidden="true">*</span></label>
+        <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="254" aria-required="true" aria-describedby="e-email">
+        <div class="err" id="e-email">צריך כתובת מייל תקינה לקבלת אישור הפנייה</div>
       </div>
       <div class="field">
         <label for="f-size">גודל המוקד</label>
@@ -443,9 +446,11 @@
           <option>מעל 300</option>
         </select>
       </div>
+      <div class="form-trap" aria-hidden="true"><label for="f-website">Website</label><input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
       <button class="btn btn-hot" type="submit">דברו איתי »</button>
       <label class="consent"><input type="checkbox" name="consent"> מאשרים קבלת עדכונים ותוכן שיווקי מ־GAV Systems.</label>
       <p class="form-note" id="form-note" role="status"></p>
+      <noscript><p class="form-note">כדי לשלוח את הטופס יש להפעיל JavaScript. אפשר גם לפנות אלינו ב־<a href="mailto:omri.sa@gav.co.il">omri.sa@gav.co.il</a>.</p></noscript>
     </form>
   </div>
 
@@ -630,22 +635,28 @@
 </div>
 
 <script>
-  // Where demo requests are sent (opens the visitor's mail app). Fill in before publishing.
-  const CONTACT_EMAIL = "omri.sa@gav.co.il";
+  // Public form intake only. Google/Gmail credentials remain in Make.
+  const MAKE_WEBHOOK_URL = "https://hook.eu1.make.com/qi3v0u3g0wju380ejxa8jm2qaga36x8h";
 
-  // lead form: validate, then open a pre-filled email
+  // Make saves the lead, sends its confirmation, then returns {ok: true}.
   const form = document.getElementById("lead");
   const note = document.getElementById("form-note");
+  const submitButton = form.querySelector('button[type="submit"]');
+  const submitLabel = submitButton.textContent;
+  let submitting = false;
   const fields = {
-    name: { el: document.getElementById("f-name"), err: document.getElementById("e-name"), ok: (v) => v.trim().length > 1 },
-    phone: { el: document.getElementById("f-phone"), err: document.getElementById("e-phone"), ok: (v) => v.replace(/\D/g, "").length >= 9 },
-    email: { el: document.getElementById("f-email"), err: document.getElementById("e-email"), ok: (v) => v.trim() === "" || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) },
+    name: { el: document.getElementById("f-name"), err: document.getElementById("e-name"), ok: (v) => v.trim().length >= 2 && v.trim().length <= 120 },
+    phone: { el: document.getElementById("f-phone"), err: document.getElementById("e-phone"), ok: (v) => /^\+?[0-9 ()-]{9,25}$/.test(v.trim()) && v.replace(/\D/g, "").length >= 9 },
+    email: { el: document.getElementById("f-email"), err: document.getElementById("e-email"), ok: (v) => v.trim().length <= 254 && /^[^\s@,;<>]+@[^\s@,;<>]+\.[^\s@,;<>]+$/.test(v.trim()) },
   };
   Object.values(fields).forEach((f) => f.el.addEventListener("input", () => {
     f.err.classList.remove("show"); f.el.removeAttribute("aria-invalid");
   }));
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    if (submitting) return;
+    note.className = "form-note";
+    note.textContent = "";
     let first = null;
     for (const f of Object.values(fields)) {
       const good = f.ok(f.el.value);
@@ -653,25 +664,47 @@
       if (good) f.el.removeAttribute("aria-invalid"); else { f.el.setAttribute("aria-invalid", "true"); first = first || f.el; }
     }
     if (first) { first.focus(); return; }
-    if (!CONTACT_EMAIL) {
-      note.className = "form-note";
-      note.textContent = "הטופס עוד לא מחובר לכתובת יעד.";
-      return;
-    }
     const d = new FormData(form);
-    const body = [
-      "שם: " + d.get("name"),
-      "חברה: " + (d.get("company") || "—"),
-      "טלפון: " + d.get("phone"),
-      "מייל: " + (d.get("email") || "—"),
-      "גודל המוקד: " + (d.get("size") || "—"),
-      "מאשרים עדכונים: " + (d.get("consent") ? "כן" : "לא"),
-    ].join("\n");
-    window.location.href = "mailto:" + CONTACT_EMAIL +
-      "?subject=" + encodeURIComponent("תיאום הדגמה — GAV Intelligence") +
-      "&body=" + encodeURIComponent(body);
-    note.className = "form-note ok";
-    note.textContent = "תודה! נחזור אליכם בהקדם.";
+    if (String(d.get("website") || "").trim()) return;
+    const body = new URLSearchParams();
+    for (const key of ["name", "company", "phone", "email", "size"]) {
+      body.set(key, String(d.get(key) || "").trim());
+    }
+    body.set("consent", d.get("consent") ? "true" : "false");
+    body.set("website", "");
+    body.set("source_url", window.location.origin + window.location.pathname);
+    body.set("submission_id", window.crypto.randomUUID());
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 45000);
+    submitting = true;
+    submitButton.disabled = true;
+    submitButton.textContent = "שולח…";
+    form.setAttribute("aria-busy", "true");
+    note.textContent = "שולחים את הפרטים…";
+    try {
+      const response = await fetch(MAKE_WEBHOOK_URL, {
+        method: "POST",
+        body,
+        credentials: "omit",
+        referrerPolicy: "no-referrer",
+        signal: controller.signal,
+      });
+      if (!response.ok) throw new Error("Submission rejected");
+      const result = await response.json();
+      if (result.ok !== true) throw new Error("Submission not confirmed");
+      form.reset();
+      note.className = "form-note ok";
+      note.textContent = "תודה! הפנייה התקבלה ומייל אישור נשלח אליכם. נחזור אליכם בהקדם.";
+    } catch {
+      note.className = "form-note error";
+      note.textContent = "לא הצלחנו לאמת את השליחה. בדקו אם התקבל מייל אישור לפני ניסיון נוסף, או פנו אלינו ב־omri.sa@gav.co.il.";
+    } finally {
+      clearTimeout(timeout);
+      submitting = false;
+      submitButton.disabled = false;
+      submitButton.textContent = submitLabel;
+      form.removeAttribute("aria-busy");
+    }
   });
 
   // hide the floating mobile button while the form is on screen
@@ -806,3 +839,4 @@
 <script src="https://files.bpcontent.cloud/2026/10/21/17/20261021170148-AB2YBY26.js" defer></script>
 </body>
 </html>
+
