@@ -690,11 +690,14 @@
         signal: controller.signal,
       });
       if (!response.ok) throw new Error("Submission rejected");
-      const result = await response.json();
-      if (result.ok !== true) throw new Error("Submission not confirmed");
+      const reply = (await response.text()).trim();
+      const queued = response.status === 200 && reply === "Accepted";
+      if (!queued && JSON.parse(reply)?.ok !== true) throw new Error("Submission not confirmed");
       form.reset();
       note.className = "form-note ok";
-      note.textContent = "תודה! הפנייה התקבלה ומייל אישור נשלח אליכם. נחזור אליכם בהקדם.";
+      note.textContent = queued
+        ? "תודה! הפנייה התקבלה. נעדכן אתכם במייל ונחזור אליכם בהקדם."
+        : "תודה! הפנייה התקבלה ומייל אישור נשלח אליכם. נחזור אליכם בהקדם.";
     } catch {
       note.className = "form-note error";
       note.textContent = "לא הצלחנו לאמת את השליחה. בדקו אם התקבל מייל אישור לפני ניסיון נוסף, או פנו אלינו ב־omri.sa@gav.co.il.";
